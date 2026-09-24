@@ -26,17 +26,17 @@ class Config:
     MP_PUBLIC_KEY = os.environ.get('MP_PUBLIC_KEY')
     # URL pública que recibe los webhooks de Mercado Pago
     MP_WEBHOOK_URL = os.environ.get(
-        'MP_WEBHOOK_URL', 'http://localhost:5000/pagos/webhook'
+        'MP_WEBHOOK_URL', 'http://localhost:5001/pagos/webhook'
     )
     # URL base del sitio (para los back_urls de la preferencia)
-    APP_BASE_URL = os.environ.get('APP_BASE_URL', 'http://localhost:5000')
+    APP_BASE_URL = os.environ.get('APP_BASE_URL', 'http://localhost:5001')
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL',
-        'mysql+pymysql://root:Alvlgeddl09*@localhost/sistema_pagos'
+        'mysql+pymysql://root:Mz200509%23@localhost:5000/sistema_pagos'
     )
 
 

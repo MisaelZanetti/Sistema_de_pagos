@@ -9,3 +9,4 @@ from flask import Blueprint
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 from . import routes  # importa al final para evitar imports circulares
+from . import models  # registra el User y el user_loader de Flask-Login
