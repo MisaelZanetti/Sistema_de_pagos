@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingresar{% endblock %}
+
+{% block content %}
+    <div class="auth">
+        <div class="auth__card card">
+            <h1 class="auth__title">Ingresar</h1>
+            <p class="auth__subtitle">Iniciá sesión para continuar.</p>
+
+            <form method="post" novalidate>
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.username.label(class='form-label') }}
+                    {{ form.username(class='form-control', placeholder='Tu nombre', autofocus=true) }}
+                    {% for error in form.username.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label(class='form-label') }}
+                    {{ form.password(class='form-control', placeholder='Tu contraseña') }}
+                    {% for error in form.password.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                {{ form.submit(class='btn btn--primary btn--block') }}
+            </form>
+
+            <p class="auth__footer">
+                ¿No tenés cuenta? <a href="{{ url_for('auth.register') }}">Crear cuenta</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -40,13 +40,11 @@
 
       <div class="navbar__auth">
         {% if current_user.is_authenticated %}
-        <span class="navbar__user">Hola, {{ current_user.first_name }}</span>
-        {# Reemplazar por url_for('auth.logout') cuando exista esa ruta #}
-        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.index') }}">Salir</a>
+        <span class="navbar__user">Hola, {{ current_user.username }}</span>
+        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.logout') }}">Salir</a>
         {% else %}
-        {# Reemplazar por url_for('auth.login') / url_for('auth.register') cuando existan #}
-        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.index') }}">Ingresar</a>
-        <a class="navbar__cta navbar__cta--primary" href="{{ url_for('auth.index') }}">Crear cuenta</a>
+        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.login') }}">Ingresar</a>
+        <a class="navbar__cta navbar__cta--primary" href="{{ url_for('auth.register') }}">Crear cuenta</a>
         {% endif %}
       </div>
     </div>

@@ -1,4 +1,4 @@
-/* app/static/style.css
+/* app/static/css/style.css
    Sistema de diseño base del proyecto, estilo Apple.
    Cargar ANTES que navbar.css (define las variables :root que
    navbar.css y el resto de las pantallas reutilizan). */
