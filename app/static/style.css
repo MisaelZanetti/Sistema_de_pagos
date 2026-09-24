@@ -1,0 +1,287 @@
+/* app/static/style.css
+   Sistema de diseño base del proyecto, estilo Apple.
+   Cargar ANTES que navbar.css (define las variables :root que
+   navbar.css y el resto de las pantallas reutilizan). */
+
+:root {
+    /* Colores */
+    --color-bg: #f5f5f7;
+    --color-surface: #ffffff;
+    --color-surface-translucent: rgba(255, 255, 255, 0.8);
+    --color-text: #1d1d1f;
+    --color-text-secondary: #6e6e73;
+    --color-border: rgba(0, 0, 0, 0.08);
+
+    --color-blue: #0066cc;
+    --color-blue-hover: #0071e3;
+    --color-green: #34c759;
+    --color-red: #ff3b30;
+    --color-orange: #ff9500;
+
+    /* Tipografía */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /* Layout */
+    --navbar-height: 52px;
+    --radius-card: 28px;
+    --radius-control: 12px;
+    --radius-pill: 980px;
+    --max-width: 1024px;
+}
+
+/* --- Reset mínimo --- */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    padding-top: var(--navbar-height);
+    -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--color-blue); text-decoration: none; }
+a:hover { color: var(--color-blue-hover); }
+
+/* --- Tipografía --- */
+h1, h2, h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin: 0 0 12px;
+}
+
+h1 { font-size: 34px; }
+h2 { font-size: 26px; }
+h3 { font-size: 20px; }
+
+p {
+    color: var(--color-text-secondary);
+    margin: 0 0 12px;
+}
+
+.text-muted { color: var(--color-text-secondary); }
+.text-center { text-align: center; }
+
+/* --- Layout / contenedor --- */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 22px;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 720px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* --- Tarjetas (28px, sin sombra) --- */
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 28px;
+}
+
+.card + .card { margin-top: 16px; }
+
+.card__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+
+.card__meta {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0 0 16px;
+}
+
+/* --- Botones --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn--primary {
+    background: var(--color-blue);
+    color: #ffffff;
+}
+.btn--primary:hover { background: var(--color-blue-hover); color: #ffffff; }
+
+.btn--secondary {
+    background: var(--color-bg);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+.btn--secondary:hover { background: #ececee; color: var(--color-text); }
+
+.btn--ghost {
+    background: transparent;
+    color: var(--color-blue);
+}
+.btn--ghost:hover { background: rgba(0, 102, 204, 0.08); }
+
+.btn--danger {
+    background: var(--color-red);
+    color: #ffffff;
+}
+.btn--danger:hover { opacity: 0.88; color: #ffffff; }
+
+.btn--sm { padding: 6px 14px; font-size: 13px; }
+.btn--block { display: flex; width: 100%; }
+
+/* --- Formularios (WTForms) --- */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-control);
+    padding: 11px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
+}
+
+.form-error {
+    color: var(--color-red);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+select.form-control { appearance: none; }
+textarea.form-control { resize: vertical; min-height: 100px; }
+
+/* --- Tablas (listados de productos / pedidos) --- */
+.table-wrap {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-secondary);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
+
+/* --- Badges de estado (pedido / pago) --- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+}
+
+.badge--pendiente  { background: rgba(255, 149, 0, 0.12); color: var(--color-orange); }
+.badge--pagado,
+.badge--approved    { background: rgba(52, 199, 89, 0.12); color: #1e7e34; }
+.badge--cancelado,
+.badge--rejected    { background: rgba(255, 59, 48, 0.12); color: var(--color-red); }
+.badge--error       { background: rgba(255, 59, 48, 0.12); color: var(--color-red); }
+
+/* --- Alertas (flash messages) --- */
+.app-flash {
+    max-width: var(--max-width);
+    margin: 16px auto 0;
+    padding: 0 22px;
+}
+
+.alert {
+    padding: 10px 16px;
+    border-radius: var(--radius-control);
+    font-size: 13px;
+    margin-bottom: 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.alert-success { border-color: rgba(52, 199, 89, 0.4); color: #1e7e34; }
+.alert-danger  { border-color: rgba(255, 59, 48, 0.4); color: #c0392b; }
+.alert-info    { border-color: rgba(0, 102, 204, 0.3); color: var(--color-blue); }
+.alert-warning { border-color: rgba(255, 149, 0, 0.4); color: #b8860b; }
+
+/* --- Estado vacío --- */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--color-text-secondary);
+}

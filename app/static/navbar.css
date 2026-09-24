@@ -1,0 +1,208 @@
+/* app/static/css/navbar.css
+   Navbar estilo Apple: fondo translúcido con blur, tipografía SF Pro,
+   acentos en azul #0066cc / #0071e3, sin sombras duras.
+   Depende de las variables :root definidas en style.css — cargar
+   style.css ANTES que este archivo. */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface-translucent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.navbar__inner {
+    width: 100%;
+    max-width: var(--max-width);
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar__brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navbar__brand:hover { color: var(--color-text); }
+
+.navbar__brand-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    display: block;
+    object-fit: contain;
+}
+
+.navbar__brand-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-blue), var(--color-blue-hover));
+    display: inline-block;
+}
+
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__link {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.navbar__link:hover {
+    color: var(--color-text);
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.navbar__link.is-active {
+    color: var(--color-blue);
+    font-weight: 600;
+    background-color: rgba(0, 102, 204, 0.08);
+}
+
+.navbar__auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar__user {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.navbar__cta {
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar__cta--primary {
+    background-color: var(--color-blue);
+    color: #ffffff;
+}
+
+.navbar__cta--primary:hover {
+    background-color: var(--color-blue-hover);
+    color: #ffffff;
+}
+
+.navbar__cta--ghost {
+    color: var(--color-text-secondary);
+}
+
+.navbar__cta--ghost:hover {
+    color: var(--color-text);
+}
+
+.navbar__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: var(--color-text);
+}
+
+.navbar__toggle svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* --- Responsive: menú colapsable en mobile --- */
+@media (max-width: 720px) {
+    .navbar__toggle {
+        display: inline-flex;
+    }
+
+    .navbar__links {
+        position: fixed;
+        top: var(--navbar-height);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: 8px 14px;
+        transform: translateY(-8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .navbar__links.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .navbar__link {
+        padding: 12px 10px;
+        border-radius: var(--radius-control);
+        width: 100%;
+        text-align: left;
+    }
+
+    .navbar__auth {
+        position: fixed;
+        top: calc(var(--navbar-height) + 1px);
+        left: 0;
+        right: 0;
+        background: var(--color-surface);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 14px 12px;
+        gap: 6px;
+        transform: translateY(-8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .navbar__auth.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .navbar__cta,
+    .navbar__user {
+        width: 100%;
+        text-align: center;
+    }
+}

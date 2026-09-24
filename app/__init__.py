@@ -24,8 +24,6 @@ def create_app(config_name='development'):
 
     @app.route('/')
     def index():
-        # Mientras no exista el módulo auth, manda directo a pagos.
-        # Cuando armes login, acá podés redirigir según autenticación.
         return redirect(url_for('pagos.index'))
 
     return app

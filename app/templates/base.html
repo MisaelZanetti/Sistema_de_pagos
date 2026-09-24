@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sistema de Pagos{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Sistema de Pagos{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
 </head>
+
 <body>
-    {# Vas a meter acá tu navbar y tu CSS. Si usás Bootstrap o algo
-       propio, los enlaces van en este head. #}
-    <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </main>
+  <nav class="navbar">
+    <div class="navbar__inner">
+      <a class="navbar__brand" href="{{ url_for('pagos.index') }}">
+        <img class="navbar__brand-icon" src="{{ url_for('static', filename='icon.png') }}" alt="Icono de la marca">
+        Sistema de Pagos
+      </a>
+
+      <button class="navbar__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <ul class="navbar__links">
+        <li>
+          <a class="navbar__link {% if request.blueprint == 'pagos' %}is-active{% endif %}"
+            href="{{ url_for('pagos.index') }}">Pagos</a>
+        </li>
+        <li>
+          <a class="navbar__link {% if request.blueprint == 'productos' %}is-active{% endif %}"
+            href="{{ url_for('productos.index') }}">Productos</a>
+        </li>
+        <li>
+          <a class="navbar__link {% if request.blueprint == 'pedidos' %}is-active{% endif %}"
+            href="{{ url_for('pedidos.index') }}">Pedidos</a>
+        </li>
+      </ul>
+
+      <div class="navbar__auth">
+        {% if current_user.is_authenticated %}
+        <span class="navbar__user">Hola, {{ current_user.first_name }}</span>
+        {# Reemplazar por url_for('auth.logout') cuando exista esa ruta #}
+        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.index') }}">Salir</a>
+        {% else %}
+        {# Reemplazar por url_for('auth.login') / url_for('auth.register') cuando existan #}
+        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.index') }}">Ingresar</a>
+        <a class="navbar__cta navbar__cta--primary" href="{{ url_for('auth.index') }}">Crear cuenta</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
 </body>
+
 </html>
