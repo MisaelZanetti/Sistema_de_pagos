@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from flask import flash, redirect, render_template, url_for
+from flask_login import login_required
 from app.modules.auth.services import AuthService
 from app.modules.productos.services import ProductosService
 
@@ -10,6 +11,7 @@ from .services import PedidosService
 
 
 @pedidos_bp.route('/')
+@login_required
 def index():
     pedidos = PedidosService.get_all()
     filas = [{'pedido': p, 'usuario': AuthService.get_by_id(p.user_id).username} for p in pedidos]
@@ -17,6 +19,7 @@ def index():
 
 
 @pedidos_bp.route('/nuevo', methods=['GET', 'POST'])
+@login_required
 def crear():
     form = PedidoForm()
     form.usuario.choices = [(u.id, u.username) for u in AuthService.get_all()]
@@ -32,6 +35,7 @@ def crear():
 
 
 @pedidos_bp.route('/<int:pedido_id>')
+@login_required
 def detalle(pedido_id):
     pedido = PedidosService.get_by_id(pedido_id)
     items = [
@@ -52,6 +56,7 @@ def detalle(pedido_id):
 
 
 @pedidos_bp.route('/<int:pedido_id>/agregar_item', methods=['POST'])
+@login_required
 def agregar_item(pedido_id):
     form = ItemPedidoForm()
     form.producto.choices = [(p.id, p.nombre) for p in ProductosService.get_all()]
@@ -62,6 +67,7 @@ def agregar_item(pedido_id):
 
 
 @pedidos_bp.route('/<int:pedido_id>/estado', methods=['POST'])
+@login_required
 def cambiar_estado(pedido_id):
     form = EstadoForm()
     if form.validate_on_submit():
@@ -71,6 +77,7 @@ def cambiar_estado(pedido_id):
 
 
 @pedidos_bp.route('/<int:pedido_id>/item/<int:item_id>/eliminar', methods=['POST'])
+@login_required
 def eliminar_item(pedido_id, item_id):
     PedidosService.eliminar_item(pedido_id, item_id)
     flash('Item eliminado.', 'info')
@@ -78,6 +85,7 @@ def eliminar_item(pedido_id, item_id):
 
 
 @pedidos_bp.route('/<int:pedido_id>/eliminar', methods=['POST'])
+@login_required
 def eliminar(pedido_id):
     PedidosService.delete(pedido_id)
     flash('Pedido eliminado.', 'info')

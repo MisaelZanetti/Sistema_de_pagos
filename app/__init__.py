@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for
+from flask_login import current_user
 from app.config import config
 from app.extensions import db, login_manager, migrate, csrf
 
@@ -24,6 +25,8 @@ def create_app(config_name='development'):
 
     @app.route('/')
     def index():
+        if not current_user.is_authenticated:
+            return redirect(url_for('auth.login'))
         return redirect(url_for('pagos.index'))
 
     return app

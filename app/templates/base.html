@@ -41,10 +41,12 @@
       <div class="navbar__auth">
         {% if current_user.is_authenticated %}
         <span class="navbar__user">Hola, {{ current_user.username }}</span>
+        {% if current_user.role == 'admin' %}
+        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.register') }}">Crear cuenta</a>
+        {% endif %}
         <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.logout') }}">Salir</a>
         {% else %}
-        <a class="navbar__cta navbar__cta--ghost" href="{{ url_for('auth.login') }}">Ingresar</a>
-        <a class="navbar__cta navbar__cta--primary" href="{{ url_for('auth.register') }}">Crear cuenta</a>
+        <a class="navbar__cta navbar__cta--primary" href="{{ url_for('auth.login') }}">Ingresar</a>
         {% endif %}
       </div>
     </div>

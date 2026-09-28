@@ -16,8 +16,10 @@ def index():
 
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
-    if current_user.is_authenticated:
+    if current_user.role != 'admin':
+        flash('Solo el administrador puede registrar cuentas.', 'danger')
         return redirect(url_for('pagos.index'))
 
     form = RegisterForm()
@@ -29,8 +31,7 @@ def register():
         if error:
             flash(error, 'danger')
         else:
-            login_user(user)
-            flash(f'¡Bienvenido, {user.username}! Tu cuenta fue creada.', 'success')
+            flash(f'Cuenta "{user.username}" creada.', 'success')
             return redirect(url_for('pagos.index'))
 
     return render_template('auth/register.html', form=form)
