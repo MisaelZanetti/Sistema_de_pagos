@@ -3,6 +3,54 @@
 {% block title %}Productos{% endblock %}
 
 {% block content %}
-    <h1>Módulo Productos (en construcción)</h1>
-    <p>Acá va el catálogo: listar, crear, editar y eliminar productos.</p>
+    <div class="container">
+        <div class="page-header">
+            <h1>Productos</h1>
+            <a class="btn btn--primary" href="{{ url_for('productos.crear') }}">Nuevo producto</a>
+        </div>
+
+        {% if productos %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th class="table-actions-th">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in productos %}
+                    <tr>
+                        <td>{{ p.nombre }}</td>
+                        <td>{{ p.descripcion or '—' }}</td>
+                        <td>${{ '{:,.2f}'.format(p.precio) }}</td>
+                        <td>
+                            <span class="badge {% if p.stock > 0 %}badge--pagado{% else %}badge--cancelado{% endif %}">
+                                {{ p.stock }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <a class="btn btn--sm btn--secondary" href="{{ url_for('productos.editar', producto_id=p.id) }}">Editar</a>
+                                <form class="form-inline" method="post" action="{{ url_for('productos.eliminar', producto_id=p.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn--sm btn--danger" type="submit"
+                                        onclick="return confirm('¿Eliminar {{ p.nombre }}?')">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            Todavía no hay productos. <a href="{{ url_for('productos.crear') }}">Creá el primero</a>.
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}

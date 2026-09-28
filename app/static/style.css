@@ -285,3 +285,70 @@ tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
     padding: 60px 20px;
     color: var(--color-text-secondary);
 }
+
+/* --- Acciones de tabla (editar / eliminar) --- */
+.table-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.table-actions-th {
+    text-align: right;
+}
+
+.form-inline {
+    display: inline;
+}
+
+/* --- Pantallas de autenticación (login / registro) --- */
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 22px;
+}
+
+.auth__card {
+    width: 100%;
+    max-width: 400px;
+    padding: 36px 32px;
+}
+
+.auth__title {
+    font-size: 28px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.auth__subtitle {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.auth__footer {
+    text-align: center;
+    font-size: 13px;
+    margin: 20px 0 0;
+}
+
+/* --- Pantallas de formularios (crear / editar) --- */
+.form-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 22px;
+}
+
+.form-page__card {
+    width: 100%;
+    max-width: 520px;
+    padding: 36px 32px;
+}
+
+.form-page__actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+}
