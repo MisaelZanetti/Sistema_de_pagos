@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% set clases = {'pendiente': 'badge--pendiente', 'pagado': 'badge--pagado', 'cancelado': 'badge--cancelado', 'error': 'badge--error'} %}
+
+        <div class="page-header">
+            <h1>Pedido #{{ pedido.id }}</h1>
+            <a class="btn btn--ghost" href="{{ url_for('pedidos.index') }}">Volver</a>
+        </div>
+
+        <div class="card">
+            <div class="grid grid-2">
+                <div>
+                    <p class="card__meta">Usuario</p>
+                    <p class="detalle-valor">{{ usuario }}</p>
+                </div>
+                <div>
+                    <p class="card__meta">Total</p>
+                    <p class="detalle-valor">${{ '{:,.2f}'.format(pedido.total) }}</p>
+                </div>
+            </div>
+            <div class="estado-block">
+                <span class="badge {{ clases.get(pedido.estado, 'badge--pendiente') }}">{{ pedido.estado }}</span>
+                <form class="form-inline" method="post" action="{{ url_for('pedidos.cambiar_estado', pedido_id=pedido.id) }}">
+                    {{ estado_form.hidden_tag() }}
+                    {{ estado_form.estado(class='form-control estado-select') }}
+                    {{ estado_form.submit(class='btn btn--sm btn--secondary') }}
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Items</h2>
+            {% if items %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                            <th class="table-actions-th">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fila in items %}
+                        <tr>
+                            <td>{{ fila.producto.nombre }}</td>
+                            <td>{{ fila.item.cantidad }}</td>
+                            <td>${{ '{:,.2f}'.format(fila.item.precio_unitario) }}</td>
+                            <td>${{ '{:,.2f}'.format(fila.item.subtotal()) }}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <form class="form-inline" method="post"
+                                        action="{{ url_for('pedidos.eliminar_item', pedido_id=pedido.id, item_id=fila.item.id) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button class="btn btn--sm btn--danger" type="submit">Quitar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">El pedido no tiene items todavía.</div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Agregar producto</h2>
+            <form method="post" action="{{ url_for('pedidos.agregar_item', pedido_id=pedido.id) }}" novalidate>
+                {{ item_form.hidden_tag() }}
+                <div class="grid grid-3">
+                    <div class="form-group">
+                        {{ item_form.producto.label(class='form-label') }}
+                        {{ item_form.producto(class='form-control') }}
+                        {% for error in item_form.producto.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ item_form.cantidad.label(class='form-label') }}
+                        {{ item_form.cantidad(class='form-control', min='1', step='1', value='1') }}
+                        {% for error in item_form.cantidad.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">&nbsp;</span>
+                        {{ item_form.submit(class='btn btn--primary') }}
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="detalle-actions">
+            <form method="post" action="{{ url_for('pedidos.eliminar', pedido_id=pedido.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn--danger" type="submit"
+                    onclick="return confirm('¿Eliminar el pedido #{{ pedido.id }}?')">Eliminar pedido</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

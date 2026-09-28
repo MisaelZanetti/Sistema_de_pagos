@@ -352,3 +352,27 @@ tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
     align-items: center;
     margin-top: 6px;
 }
+
+/* --- Detalle de pedido --- */
+.detalle-valor {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.estado-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.estado-select {
+    width: auto;
+    min-width: 180px;
+}
+
+.detalle-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}

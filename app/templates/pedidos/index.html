@@ -3,6 +3,55 @@
 {% block title %}Pedidos{% endblock %}
 
 {% block content %}
-    <h1>Módulo Pedidos (en construcción)</h1>
-    <p>Acá va el carrito / pedido: crear pedido, ver el mío, y su botón de pagar con Mercado Pago.</p>
+    <div class="container">
+        <div class="page-header">
+            <h1>Pedidos</h1>
+            <a class="btn btn--primary" href="{{ url_for('pedidos.crear') }}">Nuevo pedido</a>
+        </div>
+
+        {% if filas %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                        <th class="table-actions-th">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fila in filas %}
+                    {% set clases = {'pendiente': 'badge--pendiente', 'pagado': 'badge--pagado', 'cancelado': 'badge--cancelado', 'error': 'badge--error'} %}
+                    <tr>
+                        <td>#{{ fila.pedido.id }}</td>
+                        <td>{{ fila.usuario }}</td>
+                        <td>
+                            <span class="badge {{ clases.get(fila.pedido.estado, 'badge--pendiente') }}">
+                                {{ fila.pedido.estado }}
+                            </span>
+                        </td>
+                        <td>${{ '{:,.2f}'.format(fila.pedido.total) }}</td>
+                        <td>
+                            <div class="table-actions">
+                                <a class="btn btn--sm btn--secondary" href="{{ url_for('pedidos.detalle', pedido_id=fila.pedido.id) }}">Ver</a>
+                                <form class="form-inline" method="post" action="{{ url_for('pedidos.eliminar', pedido_id=fila.pedido.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn--sm btn--danger" type="submit"
+                                        onclick="return confirm('¿Eliminar el pedido #{{ fila.pedido.id }}?')">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            Todavía no hay pedidos. <a href="{{ url_for('pedidos.crear') }}">Creá el primero</a>.
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}

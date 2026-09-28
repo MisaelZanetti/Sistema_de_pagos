@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo pedido{% endblock %}
+
+{% block content %}
+    <div class="form-page">
+        <div class="card form-page__card">
+            <h1>Nuevo pedido</h1>
+
+            <form method="post" novalidate>
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.usuario.label(class='form-label') }}
+                    {{ form.usuario(class='form-control', autofocus=true) }}
+                    {% for error in form.usuario.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.estado.label(class='form-label') }}
+                    {{ form.estado(class='form-control') }}
+                    {% for error in form.estado.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-page__actions">
+                    {{ form.submit(class='btn btn--primary') }}
+                    <a class="btn btn--ghost" href="{{ url_for('pedidos.index') }}">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
