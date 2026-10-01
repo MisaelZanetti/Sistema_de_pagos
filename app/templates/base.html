@@ -12,7 +12,7 @@
 <body>
   <nav class="navbar">
     <div class="navbar__inner">
-      <a class="navbar__brand" href="{{ url_for('pagos.index') }}">
+      <a class="navbar__brand" href="{{ url_for('home.index') }}">
         <img class="navbar__brand-icon" src="{{ url_for('static', filename='icon.png') }}" alt="Icono de la marca">
         TecnoPC
       </a>
@@ -25,6 +25,11 @@
 
       <ul class="navbar__links">
         <li>
+          <a class="navbar__link {% if request.blueprint == 'vista_productos' %}is-active{% endif %}"
+            href="{{ url_for('vista_productos.index') }}">Catálogo</a>
+        </li>
+        {% if current_user.is_authenticated %}
+        <li>
           <a class="navbar__link {% if request.blueprint == 'pagos' %}is-active{% endif %}"
             href="{{ url_for('pagos.index') }}">Pagos</a>
         </li>
@@ -36,6 +41,7 @@
           <a class="navbar__link {% if request.blueprint == 'pedidos' %}is-active{% endif %}"
             href="{{ url_for('pedidos.index') }}">Pedidos</a>
         </li>
+        {% endif %}
       </ul>
 
       <div class="navbar__auth">

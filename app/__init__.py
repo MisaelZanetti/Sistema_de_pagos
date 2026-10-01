@@ -1,5 +1,4 @@
 from flask import Flask, redirect, url_for
-from flask_login import current_user
 from app.config import config
 from app.extensions import db, login_manager, migrate, csrf
 
@@ -13,20 +12,22 @@ def create_app(config_name='development'):
     migrate.init_app(app, db)
     csrf.init_app(app)
 
+    from app.modules.home import home_bp
     from app.modules.auth import auth_bp
     from app.modules.pagos import pagos_bp
     from app.modules.productos import productos_bp
     from app.modules.pedidos import pedidos_bp
+    from app.modules.vista_productos import vista_productos_bp
 
+    app.register_blueprint(home_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(pagos_bp)
     app.register_blueprint(productos_bp)
     app.register_blueprint(pedidos_bp)
+    app.register_blueprint(vista_productos_bp)
 
     @app.route('/')
     def index():
-        if not current_user.is_authenticated:
-            return redirect(url_for('auth.login'))
-        return redirect(url_for('pagos.index'))
+        return redirect(url_for('home.index'))
 
     return app
