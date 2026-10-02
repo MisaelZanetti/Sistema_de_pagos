@@ -1,8 +1,32 @@
 {% extends 'base.html' %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}TecnoPC | Componentes para tu PC{% endblock %}
 
 {% block content %}
-    <h1>Productos</h1>
-    <p>Acá van: el catálogo público y el detalle de cada producto.</p>
+<div class="app-shell">
+  <main id="inicio" class="page-width">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="hero-eyebrow"><span></span> HECHO PARA TU PRÓXIMO NIVEL</p><h1 id="hero-title">Una gran PC.<br>Empieza con <span>grandes piezas.</span></h1><p>Rendimiento para jugar, crear y llegar más lejos.<br class="desktop-break"> Encuentra los componentes que van contigo.</p><a class="primary-button" href="#catalogo">Explorar catálogo <span aria-hidden="true">→</span></a><div class="hero-footnote"><span class="mini-check">✓</span> Las mejores marcas. Todas en un solo lugar.</div></div>
+      <div class="hero-art"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><span class="hero-art-label">NEXT-LEVEL PERFORMANCE</span><div class="hero-gpu" id="hero-gpu"></div><span class="hero-art-bottom">DISEÑADA PARA IR MÁS ALLÁ <span>↗</span></span></div>
+    </section>
+    <section id="catalogo" class="catalog-section" aria-labelledby="catalog-title">
+      <div class="catalog-heading"><div><p class="overline">EL UPGRADE QUE ESTABAS BUSCANDO</p><h2 id="catalog-title">Explora nuestro catálogo<span>.</span></h2></div><span class="catalog-caption">Elige bien. Crea algo increíble.</span></div>
+      <div class="catalog-layout">
+        <aside class="filters" id="filters" aria-label="Filtros del catálogo"><div class="filter-header"><strong>☷ Filtros <span class="filter-counter" id="filter-counter" hidden>0</span></strong><button id="reset-filters">Limpiar</button></div>
+          <div class="filter-section"><h3>Precio máximo</h3><div class="range-label"><span>Hasta</span><strong id="price-value">$ {{ "{:,.0f}".format(precio_max) if precio_max > 0 else "0" }}</strong></div><input class="price-range" id="price-range" type="range" min="0" max="{{ precio_max if precio_max > 0 else 1 }}" value="{{ precio_max if precio_max > 0 else 1 }}" step="1"><div class="range-values"><span>$ 0</span><span>$ {{ "{:,.0f}".format(precio_max) if precio_max > 0 else "0" }}</span></div></div>
+          <div class="filter-section availability-filter"><label class="check-label"><input type="checkbox" id="stock-only"><span>Solo disponibles</span></label></div>
+          <div class="sidebar-note"><strong>Elige con información</strong><p>Revisa las especificaciones para comparar componentes antes de decidir.</p></div>
+        </aside>
+        <div class="catalog-results">
+          <div class="results-toolbar"><p><strong id="catalog-results-count">{{ total }}</strong> componentes encontrados</p><div><label class="search-label">Buscar <input id="search-input" type="search" placeholder="Buscar componente..." autocomplete="off"></label><button class="mobile-filters" id="mobile-filters">☷ Filtros</button><label class="sort-label">Ordenar por <select id="sort-select"><option value="featured">Destacados</option><option value="price-asc">Menor precio</option><option value="price-desc">Mayor precio</option><option value="name">Nombre</option></select></label></div></div>
+          <div class="active-filters" id="active-filters"></div><div class="product-grid" id="product-grid"></div><script id="catalogo-productos" type="application/json">{{ productos|tojson }}</script><div class="empty-state" id="empty-state" hidden><h3>No encontramos componentes</h3><p>Probá con otro nombre o quitá algún filtro.</p></div>
+          <div class="results-bottom"><span id="total-count">{{ total }}</span> componentes en el catálogo<span>Precios en pesos. Stock consultado al momento.</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="value-strip"><div><span>▦</span><section><h3>Todo para tu próxima PC</h3><p>Del primer componente al último detalle.</p></section></div><div><span>ⓘ</span><section><h3>Elige con información</h3><p>Especificaciones claras para comparar cada pieza.</p></section></div><div><span>✓</span><section><h3>Catálogo simple</h3><p>Encuentra lo que necesitás de forma rápida.</p></section></div></section>
+  </main>
+  <footer><div class="page-width footer-top"><div><a class="brand" href="{{ url_for('home.index') }}"><span class="brand-mark">T</span>TecnoPC</a><p>Buenas piezas. Grandes posibilidades.</p></div><div class="footer-links"><span>Catálogo</span></div></div><div class="page-width footer-bottom"><span>© <span id="year"></span> TecnoPC. Todos los derechos reservados.</span><span>Catálogo de productos</span><span>Diseñado para tu próximo nivel ϟ</span></div></footer>
+</div>
+<script src="{{ url_for('static', filename='catalogo.js') }}" defer></script>
 {% endblock %}

@@ -7,7 +7,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from . import auth_bp
 from .forms import LoginForm, RegisterForm
-from .services import AuthService
+from .services import AuthService, ROLE_POR_DEFECTO
 
 
 @auth_bp.route('/')
@@ -18,21 +18,23 @@ def index():
 @auth_bp.route('/register', methods=['GET', 'POST'])
 @login_required
 def register():
+    # Registrar cuentas es tarea del admin. Para el resto, la home.
     if current_user.role != 'admin':
         flash('Solo el administrador puede registrar cuentas.', 'danger')
-        return redirect(url_for('pagos.index'))
+        return redirect(url_for('home.index'))
 
     form = RegisterForm()
     if form.validate_on_submit():
         user, error = AuthService.register(
             form.username.data.strip(),
-            form.password.data
+            form.password.data,
+            form.role.data
         )
         if error:
             flash(error, 'danger')
         else:
             flash(f'Cuenta "{user.username}" creada.', 'success')
-            return redirect(url_for('pagos.index'))
+            return redirect(url_for('home.index'))
 
     return render_template('auth/register.html', form=form)
 
@@ -40,7 +42,7 @@ def register():
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('pagos.index'))
+        return redirect(url_for('home.index'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -62,4 +64,4 @@ def login():
 def logout():
     logout_user()
     flash('Cerraste tu sesión.', 'info')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('home.index'))

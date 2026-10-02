@@ -56,11 +56,15 @@ a { color: var(--color-blue); text-decoration: none; }
 a:hover { color: var(--color-blue-hover); }
 
 /* --- Tipografía --- */
-h1, h2, h3, h4 {
+h2, h3, h4 {
     font-weight: 600;
     letter-spacing: -0.02em;
     color: var(--color-text);
     margin: 0 0 12px;
+}
+
+h1 {
+    color: #ececee;
 }
 
 h1 { font-size: 34px; }
@@ -118,6 +122,23 @@ p {
     font-size: 13px;
     color: var(--color-text-secondary);
     margin: 0 0 16px;
+}
+
+/* --- Logo de la marca ---
+   Una sola definicion compartida por el navbar, el footer de la home y
+   el footer del catalogo. Los tres usan .brand-mark con la letra T. */
+.brand-mark {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    background: #1d1d1f;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 /* --- Botones --- */

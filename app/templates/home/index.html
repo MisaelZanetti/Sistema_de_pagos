@@ -39,20 +39,6 @@
       <div><p class="tp-eyebrow tp-dark">Lo último</p><h2 id="tp-products-title">Potencia que se nota.</h2></div>
       <a class="tp-text-link" href="{{ url_for('vista_productos.index') }}">Ver todos los productos <span>›</span></a>
     </div>
-    <div class="tp-product-grid">
-      <article class="tp-product-card">
-        <div class="tp-product-info"><p class="tp-product-tag">Nuevo</p><h3>RTX 5080 Founders</h3><p>16 GB GDDR7 · Blackwell</p><strong>Precio de referencia: € 1.299</strong></div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTomnetCP-L2osPLPK0kjdHQkImBUeJ7VQ__MbnjNNHxK88ELTcvlBgmvS8&s=10" alt="">
-      </article>
-      <article class="tp-product-card">
-        <div class="tp-product-info"><p class="tp-product-tag">Potencia extrema</p><h3>Ryzen 9 9950X</h3><p>16 núcleos · Hasta 5,7 GHz</p><strong>Precio de referencia: € 649</strong></div>
-        <img src="https://images.elit.com.ar/p/17731/i/qTbS5_l.webp" alt="Ryzen 9 9950X">
-      </article>
-      <article class="tp-product-card">
-        <div class="tp-product-info"><p class="tp-product-tag">Más vendido</p><h3>T-Force Delta RGB</h3><p>32 GB DDR5 · 6000 MHz</p><strong>Precio de referencia: € 129</strong></div>
-        <img src="https://d1j796mnyks2gj.cloudfront.net/23843.webp" alt="Memoria RAM">
-      </article>
-    </div>
     <p class="tp-demo-note">Estos productos y precios son ilustrativos. No representan el catálogo real ni están conectados al sistema de pagos.</p>
   </section>
 
@@ -63,7 +49,7 @@
   </section>
 
   <footer class="tp-footer" id="tp-nosotros">
-    <div class="tp-footer-top"><a class="tp-brand" href="#top"><span class="tp-brand-mark">T</span>TecnoPC</a><p>La tecnología que querés.<br>El rendimiento que necesitás.</p></div>
+    <div class="tp-footer-top"><a class="tp-brand" href="{{ url_for('home.index') }}"><span class="brand-mark">T</span>TecnoPC</a><p>La tecnología que querés.<br>El rendimiento que necesitás.</p></div>
     <div class="tp-footer-bottom"><span>© 2026 TecnoPC. Todos los derechos reservados.</span><div><a href="#tp-nosotros">Privacidad</a><a href="#tp-nosotros">Condiciones</a><a href="#tp-nosotros">Cookies</a></div></div>
   </footer>
   <div class="tp-toast" id="tp-toast" role="status" aria-live="polite"></div>
