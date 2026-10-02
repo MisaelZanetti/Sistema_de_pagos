@@ -28,5 +28,8 @@
   </main>
   <footer><div class="page-width footer-top"><div><a class="brand" href="{{ url_for('home.index') }}"><span class="brand-mark">T</span>TecnoPC</a><p>Buenas piezas. Grandes posibilidades.</p></div><div class="footer-links"><span>Catálogo</span></div></div><div class="page-width footer-bottom"><span>© <span id="year"></span> TecnoPC. Todos los derechos reservados.</span><span>Catálogo de productos</span><span>Diseñado para tu próximo nivel ϟ</span></div></footer>
 </div>
+{% endblock %}
+
+{% block scripts %}
 <script src="{{ url_for('static', filename='catalogo.js') }}" defer></script>
 {% endblock %}

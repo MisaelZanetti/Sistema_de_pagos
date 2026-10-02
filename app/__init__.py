@@ -18,6 +18,7 @@ def create_app(config_name='development'):
     from app.modules.productos import productos_bp
     from app.modules.pedidos import pedidos_bp
     from app.modules.vista_productos import vista_productos_bp
+    from app.modules.proceso_pedido import proceso_pedido_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(auth_bp)
@@ -25,6 +26,7 @@ def create_app(config_name='development'):
     app.register_blueprint(productos_bp)
     app.register_blueprint(pedidos_bp)
     app.register_blueprint(vista_productos_bp)
+    app.register_blueprint(proceso_pedido_bp)
 
     @app.route('/')
     def index():

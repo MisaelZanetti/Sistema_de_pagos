@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='catalogo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='armar_pedido.css') }}">
 </head>
 
 <body>
@@ -25,6 +26,10 @@
         <li>
           <a class="navbar__link {% if request.blueprint == 'vista_productos' %}is-active{% endif %}"
             href="{{ url_for('vista_productos.index') }}">Catálogo</a>
+        </li>
+        <li>
+          <a class="navbar__link {% if request.blueprint == 'proceso_pedido' %}is-active{% endif %}"
+            href="{{ url_for('proceso_pedido.index') }}">Arma tu Pedido →</a>
         </li>
         {% if current_user.role in ('admin', 'empleado') %}
         <li>
@@ -64,7 +69,7 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
-  <script src="{{ url_for('static', filename='catalogo.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
 </body>
 
 </html>

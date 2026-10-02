@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}TecnoPC | Armar pedido{% endblock %}
+
+{% block content %}
+<div class="page-width order-main">
+
+  <section class="order-intro" aria-labelledby="order-title">
+    <div>
+      <p class="overline">ELIGE TUS PRODUCTOS</p>
+      <h1 id="order-title">Prepara tu <span>pedido.</span></h1>
+      <p>Agrega los productos que necesitas y ajusta sus cantidades antes de pagar.</p>
+    </div>
+  </section>
+
+  <div class="order-layout">
+    <section class="component-builder" aria-label="Productos del pedido">
+      <div class="builder-heading">
+        <div>
+          <strong>Selecciona productos</strong>
+          <span>{{ unidades }} productos agregados</span>
+        </div>
+        <span>{{ unidades }}</span>
+      </div>
+
+      {% for p in productos %}
+      <article class="component-row direct-product {% if cantidades.get(p.id) %}selected{% endif %}">
+        <div class="component-index">
+          <div>
+            <svg aria-hidden="true" fill="none" height="25" width="25" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+              <rect x="9" y="9" width="6" height="6" rx="1" />
+              <path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="component-choice">
+          <strong>{{ p.nombre }}</strong>
+          <p>{{ p.descripcion or 'Sin descripcion' }}</p>
+        </div>
+
+        <div class="direct-product-action">
+          <strong>$ {{ '%.2f'|format(p.precio) }}</strong>
+
+          <form method="post" action="{{ url_for('proceso_pedido.agregar') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="producto_id" value="{{ p.id }}">
+            {% if cantidades.get(p.id) %}
+            <div class="quantity-control">
+              <button type="submit" name="delta" value="-1" aria-label="Quitar una unidad">−</button>
+              <span>{{ cantidades.get(p.id) }}</span>
+              <button type="submit" name="delta" value="1" aria-label="Agregar una unidad">+</button>
+            </div>
+            {% else %}
+            <button type="submit" name="delta" value="1" class="add-product-button">Añadir</button>
+            {% endif %}
+          </form>
+        </div>
+      </article>
+      {% else %}
+      <p class="builder-empty">Todavia no hay productos disponibles.</p>
+      {% endfor %}
+    </section>
+
+    <aside class="order-summary">
+      <div class="summary-heading">
+        <div>
+          <span>
+            <svg aria-hidden="true" fill="none" height="18" width="18" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+              <rect x="9" y="9" width="6" height="6" rx="1" />
+              <path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4" />
+            </svg>
+          </span>
+          <div>
+            <strong>Tu pedido</strong>
+            <p>{{ unidades }} productos</p>
+          </div>
+        </div>
+        {% if carrito %}
+        <form method="post" action="{{ url_for('proceso_pedido.vaciar') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit">Vaciar</button>
+        </form>
+        {% endif %}
+      </div>
+
+      <div class="summary-products">
+        {% for fila in carrito %}
+        <div>
+          <span>
+            <strong>{{ fila.producto.nombre }}</strong>
+          </span>
+          <b>
+            {% if fila.item.cantidad > 1 %}<small>{{ fila.item.cantidad }} ×</small>{% endif %}
+            $ {{ '%.2f'|format(fila.producto.precio * fila.item.cantidad) }}
+          </b>
+          <form method="post" action="{{ url_for('proceso_pedido.quitar') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="producto_id" value="{{ fila.producto.id }}">
+            <button type="submit">Quitar</button>
+          </form>
+        </div>
+        {% else %}
+        <div class="summary-empty">
+          <svg aria-hidden="true" fill="none" height="29" width="29" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="6" width="12" height="12" rx="2" />
+            <rect x="9" y="9" width="6" height="6" rx="1" />
+            <path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4" />
+          </svg>
+          <strong>Tu pedido esta vacio</strong>
+          <p>Agrega productos para empezar.</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="summary-totals">
+        <p><span>Subtotal</span><strong>$ {{ '%.2f'|format(total) }}</strong></p>
+        <p><span>Envio</span><strong>{{ 'Gratis' if carrito else '—' }}</strong></p>
+        <div>
+          <span>Total a pagar <small>IVA incluido</small></span>
+          <strong>$ {{ '%.2f'|format(total) }}</strong>
+        </div>
+      </div>
+
+      <button class="pay-button" id="btn-pagar" type="button" {% if not carrito %}disabled{% endif %}>
+        Pagar
+        <svg aria-hidden="true" fill="none" height="18" width="18" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12h16m-6-6 6 6-6 6" />
+        </svg>
+      </button>
+
+      <p class="secure-note">
+        <svg aria-hidden="true" fill="none" height="15" width="15" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 2 8 3v6c0 6-8 11-8 11S4 17 4 11V5l8-3Z" />
+          <path d="m8 11 3 3 5-5" />
+        </svg>
+        Pago seguro y datos protegidos
+      </p>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
+<script src="{{ url_for('static', filename='armar_pedido.js') }}" defer></script>
+{% endblock %}
