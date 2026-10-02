@@ -1,8 +1,72 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}TecnoPC | Componentes para tu PC{% endblock %}
 
 {% block content %}
-    <h1>Módulo Pagos / Mercado Pago (en construcción)</h1>
-    <p>Acá van: crear preferencia (checkout), back_urls (success/pending/failure) y el webhook.</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+<div class="tecnopc-home">
+
+  <section class="tp-hero">
+    <div class="tp-hero-image"></div>
+    <div class="tp-hero-shade"></div>
+    <div class="tp-hero-content">
+      <p class="tp-eyebrow">Rendimiento sin límites</p>
+      <h1>Tu próxima gran<br>máquina empieza aquí.</h1>
+      <p class="tp-hero-copy">Componentes seleccionados para crear algo increíble.</p>
+      <div class="tp-hero-actions">
+        <a class="tp-button tp-primary" href="{{ url_for('vista_productos.index') }}">Comprar componentes</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tp-category-section" aria-labelledby="tp-categories-title">
+    <div class="tp-section-heading">
+      <p class="tp-eyebrow tp-dark">Todo para tu setup</p>
+      <h2 id="tp-categories-title">Encontrá justo lo que necesitás.</h2>
+    </div>
+    <div class="tp-category-grid">
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"/></svg></span>Procesadores</a>
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M6 18v2m12-2v2M3 10H1m2 4H1"/></svg></span>Tarjetas gráficas</a>
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M7 10h3v4H7zm7 0h3v4h-3zM7 17v2m4-2v2m2-2v2m4-2v2"/></svg></span>Memoria RAM</a>
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5m3 3h.01"/></svg></span>Almacenamiento</a>
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2"/><circle cx="12" cy="10" r="4"/><path d="M9 18h6"/></svg></span>Gabinetes</a>
+      <a class="tp-category" href="{{ url_for('vista_productos.index') }}"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 10c-3-4-6-2-5 1 1 2 3 2 5 1m2 0c4-2 3-6 0-6-2 0-3 2-2 4m0 4c-1 5 3 6 5 4 1-2 0-4-3-5"/></svg></span>Refrigeración</a>
+    </div>
+  </section>
+
+  <section class="tp-products-section" id="tp-productos" aria-labelledby="tp-products-title">
+    <div class="tp-products-head">
+      <div><p class="tp-eyebrow tp-dark">Lo último</p><h2 id="tp-products-title">Potencia que se nota.</h2></div>
+      <a class="tp-text-link" href="{{ url_for('vista_productos.index') }}">Ver todos los productos <span>›</span></a>
+    </div>
+    <div class="tp-product-grid">
+      <article class="tp-product-card">
+        <div class="tp-product-info"><p class="tp-product-tag">Nuevo</p><h3>RTX 5080 Founders</h3><p>16 GB GDDR7 · Blackwell</p><strong>Precio de referencia: € 1.299</strong></div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTomnetCP-L2osPLPK0kjdHQkImBUeJ7VQ__MbnjNNHxK88ELTcvlBgmvS8&s=10" alt="">
+      </article>
+      <article class="tp-product-card">
+        <div class="tp-product-info"><p class="tp-product-tag">Potencia extrema</p><h3>Ryzen 9 9950X</h3><p>16 núcleos · Hasta 5,7 GHz</p><strong>Precio de referencia: € 649</strong></div>
+        <img src="https://images.elit.com.ar/p/17731/i/qTbS5_l.webp" alt="Ryzen 9 9950X">
+      </article>
+      <article class="tp-product-card">
+        <div class="tp-product-info"><p class="tp-product-tag">Más vendido</p><h3>T-Force Delta RGB</h3><p>32 GB DDR5 · 6000 MHz</p><strong>Precio de referencia: € 129</strong></div>
+        <img src="https://d1j796mnyks2gj.cloudfront.net/23843.webp" alt="Memoria RAM">
+      </article>
+    </div>
+    <p class="tp-demo-note">Estos productos y precios son ilustrativos. No representan el catálogo real ni están conectados al sistema de pagos.</p>
+  </section>
+
+  <section class="tp-services" id="tp-soporte">
+    <article><span>01</span><h3>Envío rápido</h3><p>Recibí tus componentes cuidadosamente protegidos.</p></article>
+    <article><span>02</span><h3>Expertos reales</h3><p>Asesoramiento para elegir las piezas para tu computadora.</p></article>
+    <article><span>03</span><h3>Compra segura</h3><p>Consultá las condiciones y la información de cada producto antes de comprar.</p></article>
+  </section>
+
+  <footer class="tp-footer" id="tp-nosotros">
+    <div class="tp-footer-top"><a class="tp-brand" href="#top"><span class="tp-brand-mark">T</span>TecnoPC</a><p>La tecnología que querés.<br>El rendimiento que necesitás.</p></div>
+    <div class="tp-footer-bottom"><span>© 2026 TecnoPC. Todos los derechos reservados.</span><div><a href="#tp-nosotros">Privacidad</a><a href="#tp-nosotros">Condiciones</a><a href="#tp-nosotros">Cookies</a></div></div>
+  </footer>
+  <div class="tp-toast" id="tp-toast" role="status" aria-live="polite"></div>
+</div>
+<script src="{{ url_for('static', filename='home.js') }}" defer></script>
 {% endblock %}
