@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Pago pendiente{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card text-center">
+    <span class="badge badge--pendiente">Pendiente</span>
+    <h1 style="margin-top:16px;">Tu pago está en proceso</h1>
+    <p>Mercado Pago todavía está procesando el pago. Te avisamos cuando se acredite.</p>
+    {% if payment_id %}<p class="card__meta">N.º de pago: {{ payment_id }}</p>{% endif %}
+    <a class="btn btn--primary" href="{{ url_for('home.index') }}">Volver a inicio</a>
+  </div>
+</div>
+{% endblock %}

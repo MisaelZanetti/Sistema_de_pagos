@@ -2,8 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 
-# Roles que se pueden asignar al registrar. 'admin' no está a propósito:
-# solo se concede a mano en la base de datos.
 ROLES = [
     ('cliente', 'Cliente'),
     ('empleado', 'Empleado'),
@@ -28,7 +26,7 @@ class RegisterForm(FlaskForm):
     role = SelectField(
         'Rol',
         choices=ROLES,
-        validators=[DataRequired(message='Elegí un rol.')]
+        default='cliente'
     )
     submit = SubmitField('Crear cuenta')
 

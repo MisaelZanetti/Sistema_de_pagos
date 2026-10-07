@@ -27,6 +27,7 @@
                 {% endfor %}
             </div>
 
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
             <div class="form-group">
                 {{ form.role.label(class='form-label') }}
                 {{ form.role(class='form-control') }}
@@ -34,6 +35,7 @@
                 <div class="form-error">{{ error }}</div>
                 {% endfor %}
             </div>
+            {% endif %}
 
             {{ form.submit(class='btn btn--primary btn--block') }}
         </form>

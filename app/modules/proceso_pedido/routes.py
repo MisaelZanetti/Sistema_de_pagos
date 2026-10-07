@@ -1,5 +1,9 @@
+from decimal import Decimal
+
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+
+from app.modules.pedidos.services import PedidosService
 
 from . import proceso_pedido_bp
 from .services import ProcesoPedidoService
@@ -47,3 +51,29 @@ def vaciar():
     ProcesoPedidoService.vaciar(current_user.id)
     flash('Pedido vaciado.', 'info')
     return redirect(url_for('proceso_pedido.index'))
+
+
+@proceso_pedido_bp.route('/confirmar', methods=['POST'])
+@login_required
+def confirmar():
+    carrito, *_ = ProcesoPedidoService.get_resumen(current_user.id)
+    if not carrito:
+        flash('Tu carrito está vacío.', 'warning')
+        return redirect(url_for('proceso_pedido.index'))
+
+    pedido = PedidosService.create(
+        user_id=current_user.id,
+        estado='pendiente',
+        total=Decimal('0.00')
+    )
+
+    for fila in carrito:
+        PedidosService.agregar_item(
+            pedido.id,
+            fila['item'].producto_id,
+            fila['item'].cantidad
+        )
+
+    ProcesoPedidoService.vaciar(current_user.id)
+
+    return redirect(url_for('pagos.checkout', pedido_id=pedido.id))

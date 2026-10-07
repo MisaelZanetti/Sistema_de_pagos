@@ -16,19 +16,20 @@ def index():
 
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
-@login_required
 def register():
-    # Registrar cuentas es tarea del admin. Para el resto, la home.
-    if current_user.role != 'admin':
-        flash('Solo el administrador puede registrar cuentas.', 'danger')
-        return redirect(url_for('home.index'))
 
     form = RegisterForm()
     if form.validate_on_submit():
+        # Solo un admin puede elegir el rol; el resto se registra como cliente.
+        if current_user.is_authenticated and current_user.role == 'admin':
+            role = form.role.data
+        else:
+            role = ROLE_POR_DEFECTO
+
         user, error = AuthService.register(
             form.username.data.strip(),
             form.password.data,
-            form.role.data
+            role
         )
         if error:
             flash(error, 'danger')
@@ -53,7 +54,7 @@ def login():
         if user:
             login_user(user)
             flash(f'¡Hola de nuevo, {user.username}!', 'success')
-            return redirect(url_for('pagos.index'))
+            return redirect(url_for('home.index'))
         flash('Nombre o contraseña incorrectos.', 'danger')
 
     return render_template('auth/login.html', form=form)

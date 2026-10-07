@@ -15,7 +15,8 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // PENDIENTE: acá va la pasarela de pago.
+                const form = document.getElementById('form-confirmar');
+                if (form) form.submit();
             }
         });
     });

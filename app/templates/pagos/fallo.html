@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Pago rechazado{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card text-center">
+        <span class="badge badge--rejected">Rechazado</span>
+        <h1 style="margin-top:16px;">No pudimos procesar el pago</h1>
+        <p>No se realizó ningún cobro. Podés intentarlo de nuevo con otro medio de pago.</p>
+        <a class="btn btn--primary" href="{{ url_for('home.index') }}">Volver a inicio</a>
+    </div>
+</div>
+{% endblock %}

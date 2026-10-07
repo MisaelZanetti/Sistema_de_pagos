@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Pago aprobado{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card text-center">
+        <span class="badge badge--approved">Aprobado</span>
+        <h1 style="margin-top:16px;">¡Gracias por tu compra!</h1>
+        <p>Tu pago fue recibido. Estamos confirmando los detalles.</p>
+        {% if payment_id %}<p class="card__meta">N.º de pago: {{ payment_id }}</p>{% endif %}
+        <a class="btn btn--primary" href="{{ url_for('home.index') }}">Volver a inicio</a>
+    </div>
+</div>
+{% endblock %}

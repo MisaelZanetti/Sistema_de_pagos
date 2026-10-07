@@ -7,7 +7,7 @@ class Pago(BaseModel):
 
     pedido_id = db.Column(db.Integer, db.ForeignKey('pedidos.id'), nullable=False)
     mp_preference_id = db.Column(db.String(64), nullable=True)
-    mp_payment_id = db.Column(db.Integer, nullable=True)
+    mp_payment_id = db.Column(db.BigInteger, nullable=True)
     mp_merchant_order_id = db.Column(db.String(64), nullable=True)
     status = db.Column(db.String(20), nullable=False, default='pending')
     status_detail = db.Column(db.String(64), nullable=True)

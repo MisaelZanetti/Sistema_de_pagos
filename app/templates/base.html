@@ -33,10 +33,6 @@
         </li>
         {% if current_user.role in ('admin', 'empleado') %}
         <li>
-          <a class="navbar__link {% if request.blueprint == 'pagos' %}is-active{% endif %}"
-            href="{{ url_for('pagos.index') }}">Pagos</a>
-        </li>
-        <li>
           <a class="navbar__link {% if request.blueprint == 'productos' %}is-active{% endif %}"
             href="{{ url_for('productos.index') }}">Productos</a>
         </li>
